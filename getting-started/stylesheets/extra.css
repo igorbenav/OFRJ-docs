@@ -1,0 +1,22 @@
+:root {
+  --md-primary-fg-color: #5e35b1;
+  --md-primary-bg-color: #ffffff;
+  --md-accent-fg-color: #7c4dff;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #b39ddb;
+  --md-accent-fg-color: #b388ff;
+}
+
+/* Force dark text in mermaid nodes so pastel/light fills stay readable in dark mode */
+[data-md-color-scheme="slate"] .mermaid .node .label,
+[data-md-color-scheme="slate"] .mermaid .nodeLabel,
+[data-md-color-scheme="slate"] .mermaid .node rect + foreignObject div,
+[data-md-color-scheme="slate"] .mermaid .label,
+[data-md-color-scheme="slate"] .mermaid span.nodeLabel,
+[data-md-color-scheme="slate"] .mermaid .cluster-label .nodeLabel,
+[data-md-color-scheme="slate"] .mermaid .edgeLabel {
+  color: #333 !important;
+  fill: #333 !important;
+}

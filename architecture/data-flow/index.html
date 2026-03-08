@@ -1,0 +1,2361 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentação do data warehouse para análise da violência contra a mulher no Rio de Janeiro">
+      
+      
+      
+        <link rel="canonical" href="https://docs.ofrj.org/architecture/data-flow/">
+      
+      
+        <link rel="prev" href="../overview/">
+      
+      
+        <link rel="next" href="../infrastructure/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.23">
+    
+    
+      
+        <title>Fluxo de Dados - Observatório do Feminicídio RJ</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.1e989742.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.dfe2e883.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,a=__md_scope)=>JSON.parse(t.getItem(a.pathname+"."+e)),__md_set=(e,t,a=localStorage,_=__md_scope)=>{try{a.setItem(_.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fluxo-de-dados" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Observatório do Feminicídio RJ" class="md-header__button md-logo" aria-label="Observatório do Feminicídio RJ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Observatório do Feminicídio RJ
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Fluxo de Dados
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Modo escuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo escuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  Início
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting-started/quickstart/" class="md-tabs__link">
+          
+  
+  Primeiros Passos
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../overview/" class="md-tabs__link">
+          
+  
+  Arquitetura
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../data-sources/" class="md-tabs__link">
+          
+  
+  Fontes de Dados
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../pipeline/ingestion/" class="md-tabs__link">
+          
+  
+  Pipeline
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../data-dictionary/" class="md-tabs__link">
+          
+  
+  Dicionário de Dados
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/neon/" class="md-tabs__link">
+          
+  
+  Guias
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Observatório do Feminicídio RJ" class="md-nav__button md-logo" aria-label="Observatório do Feminicídio RJ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    Observatório do Feminicídio RJ
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Início
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Primeiros Passos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Primeiros Passos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Início Rápido
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuração
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comandos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitetura
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Arquitetura
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visão Geral
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fluxo de Dados
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fluxo de Dados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline-completo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pipeline Completo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fluxo-por-fonte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fluxo por Fonte
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fluxo por Fonte">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tjrj-justica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TJRJ (Justiça)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sinan-saude" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SINAN (Saúde)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isp-policia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ISP (Polícia)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sinesp-estatisticas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SINESP (Estatísticas)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sim-mortalidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIM (Mortalidade)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#referencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Referência
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#joins-entre-dimensoes-e-fatos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Joins entre Dimensões e Fatos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diagrama-er" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagrama ER
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../infrastructure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Infraestrutura
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fontes de Dados
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Fontes de Dados
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visão Geral
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/tjrj/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TJRJ — Justiça
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/sinan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SINAN — Saúde
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/isp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ISP — Polícia
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/sim/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SIM — Mortalidade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/sinesp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SINESP — Estatísticas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dados de Referência
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pipeline
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Pipeline
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/ingestion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ingestão (Python)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/staging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Staging (dbt)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pipeline/marts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Marts (dbt)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dicionário de Dados
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Dicionário de Dados
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-dictionary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Como Ler
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-dictionary/raw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Camada Raw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-dictionary/staging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Camada Staging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-dictionary/dimensions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dimensões
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-dictionary/facts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fatos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-dictionary/bridges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridges
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guias
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guias
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/neon/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Neon (Produção)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/powerbi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Power BI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/adding-source/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adicionar Fonte de Dados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/adding-dimension/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adicionar Dimensão
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/adding-fact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adicionar Fato
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Desenvolvimento
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline-completo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pipeline Completo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fluxo-por-fonte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fluxo por Fonte
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fluxo por Fonte">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tjrj-justica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TJRJ (Justiça)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sinan-saude" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SINAN (Saúde)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isp-policia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ISP (Polícia)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sinesp-estatisticas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SINESP (Estatísticas)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sim-mortalidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SIM (Mortalidade)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#referencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Referência
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#joins-entre-dimensoes-e-fatos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Joins entre Dimensões e Fatos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diagrama-er" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagrama ER
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+<h1 id="fluxo-de-dados">Fluxo de Dados<a class="headerlink" href="#fluxo-de-dados" title="Permanent link">&para;</a></h1>
+<h2 id="pipeline-completo">Pipeline Completo<a class="headerlink" href="#pipeline-completo" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral'}}%%
+graph TB
+    subgraph Fontes["Arquivos Fonte - data/"]
+        TJRJ_F["tjrj_feminicidio.csv"]
+        TJRJ_VD["tjrj_violencia_domestica.csv"]
+        TJRJ_MP["tjrj_medida x4 .csv"]
+        SINAN["sinan_violencia.csv"]
+        ISP["isp_feminicidio.csv"]
+        SINESP["sinesp por ano .xlsx x8"]
+        IBGE_M["ibge_municipio.xls"]
+        IBGE_C["ibge_censo_2022.csv"]
+        SIM_F["DOEXT.csv"]
+        REDE["rede_protecao.xlsx"]
+        JUST["indicador_justica.xlsx"]
+    end
+
+    subgraph Raw["Schema raw - Python"]
+        R_TF["raw.tjrj_feminicidio"]
+        R_TVD["raw.tjrj_violencia_domestica"]
+        R_TMP["raw.tjrj_medida"]
+        R_SIN["raw.sinan_notificacao"]
+        R_SIM["raw.sim_obito_externo"]
+        R_ISP["raw.isp_feminicidio"]
+        R_SNP["raw.sinesp_crime"]
+        R_IBM["raw.ibge_municipio"]
+        R_IBC["raw.ibge_censo"]
+        R_RED["raw.rede_protecao"]
+        R_IND["raw.indicador_justica"]
+    end
+
+    subgraph Staging["Schema staging - dbt views"]
+        S_TF["stg_tjrj__feminicidio"]
+        S_TVD["stg_tjrj__violencia_domestica"]
+        S_TMP["stg_tjrj__medida_protetiva"]
+        S_SIN["stg_sinan__notificacao"]
+        S_SIM["stg_sim__obito_externo"]
+        S_ISP["stg_isp__feminicidio"]
+        S_SNP["stg_sinesp__crime_mensal"]
+    end
+
+    subgraph Marts["Schema marts - dbt tabelas"]
+        subgraph Dims["Dimensões"]
+            D_DATE["dim_date"]
+            D_LOC["dim_location"]
+            D_CT["dim_crime_type"]
+            D_REL["dim_relationship"]
+            D_OUT["dim_outcome"]
+            D_LT["dim_location_type"]
+            D_VP["dim_victim_profile"]
+            D_CF["dim_case_flags"]
+            D_CARE["dim_care_facility"]
+        end
+
+        subgraph Facts["Fatos"]
+            F_CC["fct_court_case"]
+            F_MP["fct_medida_protetiva"]
+            F_NV["fct_notificacao_violencia"]
+            F_FP["fct_feminicidio_policia"]
+            F_OE["fct_obito_externo"]
+            F_CM["fct_crime_mensal"]
+            F_IJ["fct_indicador_justica"]
+        end
+
+        subgraph Bridges["Bridges"]
+            B_CCT["bridge_case_crime_type"]
+            B_NVT["bridge_notificacao_violence_type"]
+            B_NR["bridge_notificacao_relationship"]
+        end
+    end
+
+    TJRJ_F --&gt; R_TF --&gt; S_TF --&gt; F_CC
+    TJRJ_VD --&gt; R_TVD --&gt; S_TVD --&gt; F_CC
+    TJRJ_MP --&gt; R_TMP --&gt; S_TMP --&gt; F_MP
+    SINAN --&gt; R_SIN --&gt; S_SIN --&gt; F_NV
+    SIM_F --&gt;|chunked, filtro RJ| R_SIM --&gt; S_SIM --&gt; F_OE
+    ISP --&gt; R_ISP --&gt; S_ISP --&gt; F_FP
+    SINESP --&gt; R_SNP --&gt; S_SNP --&gt; F_CM
+    IBGE_M --&gt; R_IBM --&gt; D_LOC
+    IBGE_C --&gt; R_IBC --&gt; D_LOC
+    REDE --&gt; R_RED --&gt; D_CARE
+    JUST --&gt; R_IND --&gt; F_IJ
+
+    F_CC --&gt; B_CCT
+    F_NV --&gt; B_NVT
+    F_NV --&gt; B_NR</code></pre>
+<h2 id="fluxo-por-fonte">Fluxo por Fonte<a class="headerlink" href="#fluxo-por-fonte" title="Permanent link">&para;</a></h2>
+<h3 id="tjrj-justica">TJRJ (Justiça)<a class="headerlink" href="#tjrj-justica" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral'}}%%
+graph LR
+    F1[tjrj_feminicidio.csv] --&gt; R1[raw.tjrj_feminicidio] --&gt; S1[stg_tjrj__feminicidio] --&gt; FCT[fct_court_case]
+    F2[tjrj_violencia_domestica.csv] --&gt; R2[raw.tjrj_violencia_domestica] --&gt; S2[stg_tjrj__violencia_domestica] --&gt; FCT
+    FCT --&gt; B1[bridge_case_crime_type]
+
+    F3["tjrj_medida_protetiva.csv"] --&gt; R3["raw.tjrj_medida"]
+    F4[tjrj_medida_concedida.csv] --&gt; R3
+    F5[tjrj_medida_denegada.csv] --&gt; R3
+    F6[tjrj_medida_revogada.csv] --&gt; R3
+    R3 --&gt; S3[stg_tjrj__medida_protetiva] --&gt; FMP[fct_medida_protetiva]</code></pre>
+<p><strong>Deduplicações:</strong></p>
+<ul>
+<li><code>fct_court_case</code>: quando um caso aparece tanto em feminicídio quanto violência doméstica, o registro de feminicídio tem prioridade</li>
+<li><code>stg_tjrj__medida_protetiva</code>: quando uma medida aparece em múltiplas tabelas de desfecho, usa prioridade: revogada &gt; denegada &gt; concedida</li>
+</ul>
+<h3 id="sinan-saude">SINAN (Saúde)<a class="headerlink" href="#sinan-saude" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral'}}%%
+graph LR
+    F["sinan_violencia.csv ~1.7GB"] --&gt;|chunked, filtro RJ| R[raw.sinan_notificacao]
+    R --&gt; S[stg_sinan__notificacao]
+    S --&gt; FCT[fct_notificacao_violencia]
+    FCT --&gt; B1[bridge_notificacao_violence_type]
+    FCT --&gt; B2[bridge_notificacao_relationship]</code></pre>
+<p>O SINAN não possui chave natural única, então um <code>notification_row_id</code> sintético é gerado via <code>ROW_NUMBER()</code>.</p>
+<h3 id="isp-policia">ISP (Polícia)<a class="headerlink" href="#isp-policia" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral'}}%%
+graph LR
+    F[isp_feminicidio.csv] --&gt; R[raw.isp_feminicidio] --&gt; S[stg_isp__feminicidio] --&gt; FCT[fct_feminicidio_policia]</code></pre>
+<p>Grão: uma linha por <strong>vítima</strong> (não por caso). O campo <code>controle</code> identifica o caso, <code>uuid</code> identifica a vítima.</p>
+<h3 id="sinesp-estatisticas">SINESP (Estatísticas)<a class="headerlink" href="#sinesp-estatisticas" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral'}}%%
+graph LR
+    F1["sinesp_2015.xlsx"] --&gt; R["raw.sinesp_crime"]
+    F2["sinesp_2019.xlsx"] --&gt; R
+    F3["2020-2024"] --&gt; R
+    F4["sinesp_2025.xlsx"] --&gt; R
+    R --&gt; S["stg_sinesp__crime_mensal"] --&gt; FCT["fct_crime_mensal"]</code></pre>
+<p>Grão: Mês × Município × Tipo de Evento. Dados pré-agregados.</p>
+<h3 id="sim-mortalidade">SIM (Mortalidade)<a class="headerlink" href="#sim-mortalidade" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral'}}%%
+graph LR
+    F["DOEXT.csv ~5.4M nacional"] --&gt;|chunked, filtro RJ| R[raw.sim_obito_externo]
+    R --&gt; S[stg_sim__obito_externo]
+    S --&gt; FCT[fct_obito_externo]</code></pre>
+<p>O SIM não possui chave natural única, então um <code>death_row_id</code> sintético é gerado via <code>ROW_NUMBER()</code>. O loader faz coalesce das colunas <code>contador</code>/<code>CONTADOR</code> (mudança de schema entre versões).</p>
+<h3 id="referencia">Referência<a class="headerlink" href="#referencia" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral'}}%%
+graph LR
+    F1[ibge_municipio.xls] --&gt; R1[raw.ibge_municipio] --&gt; DL[dim_location]
+    F2[ibge_censo_2022.csv] --&gt; R2[raw.ibge_censo] --&gt; DL
+
+    F3[rede_protecao.xlsx] --&gt; R3[raw.rede_protecao] --&gt; DC[dim_care_facility]
+
+    F4[indicador_justica.xlsx] --&gt; R4[raw.indicador_justica] --&gt;|sem staging| FIJ[fct_indicador_justica]</code></pre>
+<h2 id="joins-entre-dimensoes-e-fatos">Joins entre Dimensões e Fatos<a class="headerlink" href="#joins-entre-dimensoes-e-fatos" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Dimensão</th>
+<th>Fato(s)</th>
+<th>Chave de Join</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dim_date</code></td>
+<td>Todos os fatos</td>
+<td><code>full_date</code></td>
+</tr>
+<tr>
+<td><code>dim_location</code></td>
+<td><code>fct_feminicidio_policia</code>, <code>fct_crime_mensal</code></td>
+<td><code>municipality_name_normalized</code></td>
+</tr>
+<tr>
+<td><code>dim_location</code></td>
+<td><code>fct_obito_externo</code> (×2: residência e ocorrência)</td>
+<td><code>ibge_code_6</code></td>
+</tr>
+<tr>
+<td><code>dim_outcome</code></td>
+<td><code>fct_medida_protetiva</code>, <code>fct_notificacao_violencia</code></td>
+<td><code>outcome_code</code> + <code>source_system</code></td>
+</tr>
+<tr>
+<td><code>dim_location_type</code></td>
+<td><code>fct_notificacao_violencia</code>, <code>fct_obito_externo</code></td>
+<td><code>location_type_code</code></td>
+</tr>
+<tr>
+<td><code>dim_victim_profile</code></td>
+<td><code>fct_notificacao_violencia</code>, <code>fct_feminicidio_policia</code>, <code>fct_obito_externo</code></td>
+<td><code>age_range_code</code> + <code>sex_code</code> + <code>race_code</code></td>
+</tr>
+<tr>
+<td><code>dim_case_flags</code></td>
+<td><code>fct_notificacao_violencia</code>, <code>fct_feminicidio_policia</code></td>
+<td><code>lei_maria_penha</code> + <code>is_repeat_violence</code> + <code>is_flagrante</code></td>
+</tr>
+<tr>
+<td><code>dim_relationship</code></td>
+<td><code>bridge_notificacao_relationship</code></td>
+<td><code>relationship_code</code></td>
+</tr>
+<tr>
+<td><code>dim_crime_type</code></td>
+<td><code>bridge_case_crime_type</code></td>
+<td><code>crime_code</code></td>
+</tr>
+<tr>
+<td><code>dim_care_facility</code></td>
+<td>Nenhum (referência)</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="diagrama-er">Diagrama ER<a class="headerlink" href="#diagrama-er" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral'}}%%
+erDiagram
+    dim_date {
+        int date_sk PK
+        date full_date
+        int year
+        int month
+        string month_name
+        string day_name
+        boolean is_weekend
+        string year_month
+    }
+
+    dim_location {
+        int location_sk PK
+        string ibge_code
+        string municipality_name
+        string immediate_region_name
+        string intermediate_region_name
+        int population_2022
+        float area_km2
+    }
+
+    dim_crime_type {
+        int crime_type_sk PK
+        int crime_code
+        string crime_name
+    }
+
+    dim_relationship {
+        int relationship_sk PK
+        string relationship_code
+        string relationship_name
+        string relationship_category
+    }
+
+    dim_outcome {
+        int outcome_sk PK
+        string outcome_code
+        string outcome_name
+    }
+
+    dim_location_type {
+        int location_type_sk PK
+        string location_type_code
+        string location_type_name
+    }
+
+    dim_victim_profile {
+        int victim_profile_sk PK
+        string age_range_code
+        string age_range_name
+        string sex_code
+        string sex_name
+        string race_code
+        string race_name
+        boolean is_female
+        boolean is_minor
+        boolean is_elderly
+    }
+
+    dim_case_flags {
+        int case_flags_sk PK
+        boolean lei_maria_penha
+        boolean is_repeat_violence
+        boolean is_flagrante
+        string flags_summary
+    }
+
+    dim_care_facility {
+        int facility_sk PK
+        string facility_name
+        string facility_type
+        string category
+        string municipality
+    }
+
+    fct_court_case {
+        int case_sk PK
+        string case_id
+        string case_number
+        string case_type
+        int filing_date_sk FK
+    }
+
+    fct_medida_protetiva {
+        int measure_sk PK
+        string case_id
+        int outcome_sk FK
+        int filing_date_sk FK
+    }
+
+    fct_notificacao_violencia {
+        int notification_sk PK
+        int notification_date_sk FK
+        int occurrence_date_sk FK
+        int location_type_sk FK
+        int victim_profile_sk FK
+        int case_flags_sk FK
+        int outcome_sk FK
+    }
+
+    fct_feminicidio_policia {
+        int feminicide_sk PK
+        string uuid
+        int crime_date_sk FK
+        int report_date_sk FK
+        int crime_location_sk FK
+        int victim_profile_sk FK
+        int case_flags_sk FK
+    }
+
+    fct_crime_mensal {
+        int monthly_stat_sk PK
+        int reference_date_sk FK
+        int location_sk FK
+        string event_type
+        int total_victims
+    }
+
+    fct_obito_externo {
+        int death_sk PK
+        int death_date_sk FK
+        int residence_location_sk FK
+        int occurrence_location_sk FK
+        int death_location_type_sk FK
+        int victim_profile_sk FK
+        string cause_code
+        boolean is_assault
+        boolean is_female_homicide
+    }
+
+    fct_indicador_justica {
+        int indicator_sk PK
+        string indicator_name
+        int year
+        float indicator_value
+    }
+
+    bridge_case_crime_type {
+        int case_sk FK
+        int crime_code FK
+    }
+
+    bridge_notificacao_violence_type {
+        int notification_sk FK
+        string violence_type
+    }
+
+    bridge_notificacao_relationship {
+        int notification_sk FK
+        int relationship_sk FK
+    }
+
+    fct_court_case ||--o{ dim_date : "filing_date"
+    fct_court_case ||--o{ bridge_case_crime_type : "has"
+    bridge_case_crime_type }o--|| dim_crime_type : "references"
+
+    fct_medida_protetiva ||--o{ dim_date : "filing_date"
+    fct_medida_protetiva ||--o{ dim_outcome : "outcome"
+
+    fct_notificacao_violencia ||--o{ dim_date : "notification_date"
+    fct_notificacao_violencia ||--o{ dim_date : "occurrence_date"
+    fct_notificacao_violencia ||--o{ dim_outcome : "outcome"
+    fct_notificacao_violencia ||--o{ dim_location_type : "location_type"
+    fct_notificacao_violencia ||--o{ dim_victim_profile : "victim"
+    fct_notificacao_violencia ||--o{ dim_case_flags : "flags"
+    fct_notificacao_violencia ||--o{ bridge_notificacao_violence_type : "has"
+    fct_notificacao_violencia ||--o{ bridge_notificacao_relationship : "has"
+    bridge_notificacao_relationship }o--|| dim_relationship : "references"
+
+    fct_feminicidio_policia ||--o{ dim_date : "crime_date"
+    fct_feminicidio_policia ||--o{ dim_date : "report_date"
+    fct_feminicidio_policia ||--o{ dim_location : "location"
+    fct_feminicidio_policia ||--o{ dim_victim_profile : "victim"
+    fct_feminicidio_policia ||--o{ dim_case_flags : "flags"
+
+    fct_obito_externo ||--o{ dim_date : "death_date"
+    fct_obito_externo ||--o{ dim_location : "residence"
+    fct_obito_externo ||--o{ dim_location : "occurrence"
+    fct_obito_externo ||--o{ dim_location_type : "death_location"
+    fct_obito_externo ||--o{ dim_victim_profile : "victim"
+
+    fct_crime_mensal ||--o{ dim_date : "reference_date"
+    fct_crime_mensal ||--o{ dim_location : "location"</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../overview/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Visão Geral">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Visão Geral
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../infrastructure/" class="md-footer__link md-footer__link--next" aria-label="Next: Infraestrutura">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Infraestrutura
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2025 Observatório do Feminicídio RJ
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/igorbenav/OFRJ" target="_blank" rel="noopener" title="OFRJ no GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["navigation.instant","navigation.tracking","navigation.tabs","navigation.sections","navigation.top","navigation.footer","toc.follow","search.suggest","search.highlight","content.code.copy"],"search":"../../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.5fcf0de6.min.js"></script>
+      
+    
+  </body>
+</html>

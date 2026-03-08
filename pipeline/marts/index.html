@@ -1,0 +1,2470 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentação do data warehouse para análise da violência contra a mulher no Rio de Janeiro">
+      
+      
+      
+        <link rel="canonical" href="https://docs.ofrj.org/pipeline/marts/">
+      
+      
+        <link rel="prev" href="../staging/">
+      
+      
+        <link rel="next" href="../../data-dictionary/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.23">
+    
+    
+      
+        <title>Marts (dbt) - Observatório do Feminicídio RJ</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.1e989742.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.dfe2e883.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,a=__md_scope)=>JSON.parse(t.getItem(a.pathname+"."+e)),__md_set=(e,t,a=localStorage,_=__md_scope)=>{try{a.setItem(_.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#marts-dbt" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Observatório do Feminicídio RJ" class="md-header__button md-logo" aria-label="Observatório do Feminicídio RJ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Observatório do Feminicídio RJ
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Marts (dbt)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Modo escuro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo escuro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  Início
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting-started/quickstart/" class="md-tabs__link">
+          
+  
+  Primeiros Passos
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/overview/" class="md-tabs__link">
+          
+  
+  Arquitetura
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../data-sources/" class="md-tabs__link">
+          
+  
+  Fontes de Dados
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../ingestion/" class="md-tabs__link">
+          
+  
+  Pipeline
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../data-dictionary/" class="md-tabs__link">
+          
+  
+  Dicionário de Dados
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/neon/" class="md-tabs__link">
+          
+  
+  Guias
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Observatório do Feminicídio RJ" class="md-nav__button md-logo" aria-label="Observatório do Feminicídio RJ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    Observatório do Feminicídio RJ
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Início
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Primeiros Passos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Primeiros Passos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Início Rápido
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuração
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comandos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitetura
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Arquitetura
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visão Geral
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/data-flow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fluxo de Dados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/infrastructure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Infraestrutura
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fontes de Dados
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Fontes de Dados
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visão Geral
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/tjrj/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TJRJ — Justiça
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/sinan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SINAN — Saúde
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/isp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ISP — Polícia
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/sim/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SIM — Mortalidade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/sinesp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SINESP — Estatísticas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dados de Referência
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pipeline
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Pipeline
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ingestion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ingestão (Python)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../staging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Staging (dbt)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Marts (dbt)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Marts (dbt)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dimensoes-martscore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dimensões (marts/core/)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dimensões (marts&#x2f;core&#x2f;)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dim_date" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dim_date
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dim_location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dim_location
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dim_crime_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dim_crime_type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dim_relationship" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dim_relationship
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dim_outcome" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dim_outcome
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dim_location_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dim_location_type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dim_victim_profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dim_victim_profile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dim_case_flags-junk-dimension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dim_case_flags (Junk Dimension)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dim_care_facility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dim_care_facility
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fatos-transacionais-martsviolence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fatos Transacionais (marts/violence/)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fatos Transacionais (marts&#x2f;violence&#x2f;)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fct_court_case" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fct_court_case
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fct_medida_protetiva" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fct_medida_protetiva
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fct_notificacao_violencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fct_notificacao_violencia
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fct_feminicidio_policia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fct_feminicidio_policia
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fatos-periodicos-martsaggregate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fatos Periódicos (marts/aggregate/)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fatos Periódicos (marts&#x2f;aggregate&#x2f;)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fct_crime_mensal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fct_crime_mensal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fct_indicador_justica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fct_indicador_justica
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bridges-nn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridges (N:N)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bridges (N:N)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bridge_case_crime_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bridge_case_crime_type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge_notificacao_violence_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bridge_notificacao_violence_type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge_notificacao_relationship" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bridge_notificacao_relationship
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dicionário de Dados
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Dicionário de Dados
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-dictionary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Como Ler
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-dictionary/raw/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Camada Raw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-dictionary/staging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Camada Staging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-dictionary/dimensions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dimensões
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-dictionary/facts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fatos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-dictionary/bridges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bridges
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guias
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guias
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/neon/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Neon (Produção)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/powerbi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Power BI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/adding-source/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adicionar Fonte de Dados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/adding-dimension/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adicionar Dimensão
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/adding-fact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adicionar Fato
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Desenvolvimento
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#dimensoes-martscore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dimensões (marts/core/)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dimensões (marts&#x2f;core&#x2f;)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dim_date" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dim_date
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dim_location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dim_location
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dim_crime_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dim_crime_type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dim_relationship" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dim_relationship
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dim_outcome" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dim_outcome
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dim_location_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dim_location_type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dim_victim_profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dim_victim_profile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dim_case_flags-junk-dimension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dim_case_flags (Junk Dimension)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dim_care_facility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        dim_care_facility
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fatos-transacionais-martsviolence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fatos Transacionais (marts/violence/)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fatos Transacionais (marts&#x2f;violence&#x2f;)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fct_court_case" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fct_court_case
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fct_medida_protetiva" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fct_medida_protetiva
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fct_notificacao_violencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fct_notificacao_violencia
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fct_feminicidio_policia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fct_feminicidio_policia
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fatos-periodicos-martsaggregate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fatos Periódicos (marts/aggregate/)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fatos Periódicos (marts&#x2f;aggregate&#x2f;)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fct_crime_mensal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fct_crime_mensal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fct_indicador_justica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fct_indicador_justica
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bridges-nn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridges (N:N)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bridges (N:N)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bridge_case_crime_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bridge_case_crime_type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge_notificacao_violence_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bridge_notificacao_violence_type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge_notificacao_relationship" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bridge_notificacao_relationship
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+<h1 id="marts-dbt">Marts (dbt)<a class="headerlink" href="#marts-dbt" title="Permanent link">&para;</a></h1>
+<p>A camada marts contém o modelo dimensional final, materializado como <strong>tabelas</strong> no schema <code>marts</code>. Organizado em três subpastas:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>dbt_project/models/marts/
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── _marts.yml                # Schema e testes
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── core/                     # Dimensões
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>├── violence/                 # Fatos transacionais e bridges
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>└── aggregate/                # Fatos periódicos e bridges
+</code></pre></div>
+<h2 id="dimensoes-martscore">Dimensões (<code>marts/core/</code>)<a class="headerlink" href="#dimensoes-martscore" title="Permanent link">&para;</a></h2>
+<h3 id="dim_date">dim_date<a class="headerlink" href="#dim_date" title="Permanent link">&para;</a></h3>
+<p>Dimensão de data gerada via <code>dbt_utils.date_spine()</code>, cobrindo de <strong>1998-01-01</strong> a <strong>2030-12-31</strong>.</p>
+<ul>
+<li>Chave substituta: <code>date_sk</code> (formato <code>YYYYMMDD</code> como inteiro)</li>
+<li>Nomes em português: meses (Janeiro–Dezembro), dias da semana (Domingo–Sábado)</li>
+<li>Campo <code>year_month</code> (<code>YYYY-MM</code>) para agrupamentos mensais</li>
+<li>Flag <code>is_weekend</code></li>
+</ul>
+<h3 id="dim_location">dim_location<a class="headerlink" href="#dim_location" title="Permanent link">&para;</a></h3>
+<p>92 municípios do RJ com hierarquia geográfica IBGE e dados do Censo 2022.</p>
+<ul>
+<li><strong>Fontes:</strong> <code>raw.ibge_municipio</code> + <code>raw.ibge_censo</code></li>
+<li>Chave substituta: <code>location_sk</code> via <code>ROW_NUMBER()</code></li>
+<li>Município normalizado via <code>normalize_municipio()</code> para join por nome</li>
+<li>Hierarquia: Município → Região Imediata → Região Intermediária</li>
+<li>Dados censitários: população, área (km²), densidade</li>
+</ul>
+<h3 id="dim_crime_type">dim_crime_type<a class="headerlink" href="#dim_crime_type" title="Permanent link">&para;</a></h3>
+<p>15 tipos de crime. Tabela estática com <code>VALUES</code>.</p>
+<ul>
+<li>Categorias: feminicídio, violência doméstica, violência sexual, outros</li>
+<li>Flags: <code>is_feminicide</code>, <code>is_domestic_violence</code>, <code>is_sexual_violence</code></li>
+</ul>
+<h3 id="dim_relationship">dim_relationship<a class="headerlink" href="#dim_relationship" title="Permanent link">&para;</a></h3>
+<p>19 tipos de relacionamento vítima-agressor. Tabela estática com <code>VALUES</code>.</p>
+<ul>
+<li>Fontes: vocabulários ISP e SINAN combinados</li>
+<li>Categorias: parceiro íntimo, família, conhecido</li>
+<li>Flags: <code>is_intimate_partner</code>, <code>is_family_member</code></li>
+</ul>
+<h3 id="dim_outcome">dim_outcome<a class="headerlink" href="#dim_outcome" title="Permanent link">&para;</a></h3>
+<p>Desfechos de casos. Tabela estática com <code>VALUES</code>.</p>
+<ul>
+<li><strong>TJRJ:</strong> concedida, parcial, denegada, revogada, prorrogada, pendente</li>
+<li><strong>SINAN:</strong> Cura (1), Óbito por Violência (2), Óbito por Outras Causas (3), Ignorado (9)</li>
+<li>Fallback: <code>outcome_sk = 99</code> (desconhecido)</li>
+</ul>
+<h3 id="dim_location_type">dim_location_type<a class="headerlink" href="#dim_location_type" title="Permanent link">&para;</a></h3>
+<p>Tipos de local de ocorrência. Tabela estática com <code>VALUES</code>.</p>
+<ul>
+<li><strong>SINAN:</strong> códigos <code>1</code>–<code>99</code> (residência, escola, via pública, etc.)</li>
+<li><strong>ISP:</strong> texto (residencia, via_publica, favela, etc.)</li>
+</ul>
+<h3 id="dim_victim_profile">dim_victim_profile<a class="headerlink" href="#dim_victim_profile" title="Permanent link">&para;</a></h3>
+<p>Dimensão conformada para análise demográfica consistente entre SINAN e ISP.</p>
+<ul>
+<li>Gerada por <strong>cross-join</strong> de: 7 faixas etárias × 4 códigos de sexo × 7 códigos de raça = ~196 combinações</li>
+<li>Chave substituta: <code>dbt_utils.generate_surrogate_key()</code></li>
+<li>Flags: <code>is_female</code>, <code>is_minor</code> (&lt; 18), <code>is_elderly</code> (60+)</li>
+</ul>
+<p><strong>Faixas etárias:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Código</th>
+<th>Faixa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>crianca_0_11</code></td>
+<td>0–11 anos</td>
+</tr>
+<tr>
+<td><code>adolescente_12_17</code></td>
+<td>12–17 anos</td>
+</tr>
+<tr>
+<td><code>jovem_18_29</code></td>
+<td>18–29 anos</td>
+</tr>
+<tr>
+<td><code>adulto_30_44</code></td>
+<td>30–44 anos</td>
+</tr>
+<tr>
+<td><code>adulto_45_59</code></td>
+<td>45–59 anos</td>
+</tr>
+<tr>
+<td><code>idoso_60_plus</code></td>
+<td>60+ anos</td>
+</tr>
+<tr>
+<td><code>nao_informado</code></td>
+<td>Não informado</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dim_case_flags-junk-dimension">dim_case_flags (Junk Dimension)<a class="headerlink" href="#dim_case_flags-junk-dimension" title="Permanent link">&para;</a></h3>
+<p>8 combinações de 3 flags booleanos:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lei_maria_penha</code></td>
+<td>Aplicação da Lei Maria da Penha</td>
+</tr>
+<tr>
+<td><code>is_repeat_violence</code></td>
+<td>Violência de repetição</td>
+</tr>
+<tr>
+<td><code>is_flagrante</code></td>
+<td>Prisão em flagrante (uso futuro)</td>
+</tr>
+</tbody>
+</table>
+<p>Campo <code>flags_summary</code> com texto legível: "LMP + Reincidência", "Lei Maria da Penha", "Sem flags", etc.</p>
+<h3 id="dim_care_facility">dim_care_facility<a class="headerlink" href="#dim_care_facility" title="Permanent link">&para;</a></h3>
+<p>442 equipamentos da rede de proteção (cadastro referencial).</p>
+<ul>
+<li><strong>Fonte:</strong> <code>raw.rede_protecao</code></li>
+<li>Não conectada a nenhum fato, serve como referência</li>
+<li>Campos: nome, tipo, categoria, município, endereço, telefone, e-mail, geolocalização</li>
+</ul>
+<h2 id="fatos-transacionais-martsviolence">Fatos Transacionais (<code>marts/violence/</code>)<a class="headerlink" href="#fatos-transacionais-martsviolence" title="Permanent link">&para;</a></h2>
+<h3 id="fct_court_case">fct_court_case<a class="headerlink" href="#fct_court_case" title="Permanent link">&para;</a></h3>
+<p>Processos judiciais de feminicídio e violência doméstica.</p>
+<ul>
+<li><strong>Fontes:</strong> <code>stg_tjrj__feminicidio</code> UNION ALL <code>stg_tjrj__violencia_domestica</code></li>
+<li><strong>Deduplicação:</strong> se um <code>case_id</code> aparece nas duas fontes, o registro de feminicídio vence</li>
+<li><strong>Chave:</strong> <code>dbt_utils.generate_surrogate_key(['case_id'])</code></li>
+<li><strong>FKs:</strong> <code>filing_date_sk</code>, <code>last_update_date_sk</code> → <code>dim_date</code></li>
+<li>Retém <code>assuntos_raw</code> (JSON) para parsing pela <code>bridge_case_crime_type</code></li>
+</ul>
+<h3 id="fct_medida_protetiva">fct_medida_protetiva<a class="headerlink" href="#fct_medida_protetiva" title="Permanent link">&para;</a></h3>
+<p>Pedidos de medidas protetivas de urgência.</p>
+<ul>
+<li><strong>Fonte:</strong> <code>stg_tjrj__medida_protetiva</code></li>
+<li><strong>FKs:</strong> <code>filing_date_sk</code> → <code>dim_date</code>, <code>outcome_sk</code> → <code>dim_outcome</code></li>
+<li>Fallback para <code>outcome_sk = 99</code> quando sem match</li>
+</ul>
+<h3 id="fct_notificacao_violencia">fct_notificacao_violencia<a class="headerlink" href="#fct_notificacao_violencia" title="Permanent link">&para;</a></h3>
+<p>Notificações de violência do sistema de saúde.</p>
+<ul>
+<li><strong>Fonte:</strong> <code>stg_sinan__notificacao</code></li>
+<li><strong>FKs:</strong> <code>notification_date_sk</code>, <code>occurrence_date_sk</code>, <code>death_date_sk</code> → <code>dim_date</code>; <code>outcome_sk</code> → <code>dim_outcome</code>; <code>location_type_sk</code> → <code>dim_location_type</code>; <code>victim_profile_sk</code> → <code>dim_victim_profile</code>; <code>case_flags_sk</code> → <code>dim_case_flags</code></li>
+<li>Calcula faixa etária via <code>map_faixa_etaria(ano_notificacao - ano_nascimento_vitima)</code></li>
+<li>Mantém booleans de violência e relacionamento para as bridges</li>
+</ul>
+<h3 id="fct_feminicidio_policia">fct_feminicidio_policia<a class="headerlink" href="#fct_feminicidio_policia" title="Permanent link">&para;</a></h3>
+<p>Vítimas de feminicídio registradas pela polícia.</p>
+<ul>
+<li><strong>Fonte:</strong> <code>stg_isp__feminicidio</code></li>
+<li><strong>FKs:</strong> <code>crime_date_sk</code>, <code>report_date_sk</code> → <code>dim_date</code>; <code>crime_location_sk</code> → <code>dim_location</code>; <code>victim_profile_sk</code> → <code>dim_victim_profile</code>; <code>case_flags_sk</code> → <code>dim_case_flags</code></li>
+<li>Join com <code>dim_location</code> via nome normalizado do município</li>
+</ul>
+<h2 id="fatos-periodicos-martsaggregate">Fatos Periódicos (<code>marts/aggregate/</code>)<a class="headerlink" href="#fatos-periodicos-martsaggregate" title="Permanent link">&para;</a></h2>
+<h3 id="fct_crime_mensal">fct_crime_mensal<a class="headerlink" href="#fct_crime_mensal" title="Permanent link">&para;</a></h3>
+<p>Snapshot mensal de estatísticas criminais do SINESP.</p>
+<ul>
+<li><strong>Fonte:</strong> <code>stg_sinesp__crime_mensal</code></li>
+<li><strong>Grão:</strong> Mês × Município × Tipo de Evento</li>
+<li>Pré-agrega duplicatas com <code>SUM()</code></li>
+<li><strong>FKs:</strong> <code>reference_date_sk</code> → <code>dim_date</code>, <code>location_sk</code> → <code>dim_location</code></li>
+</ul>
+<h3 id="fct_indicador_justica">fct_indicador_justica<a class="headerlink" href="#fct_indicador_justica" title="Permanent link">&para;</a></h3>
+<p>Indicadores anuais do sistema de justiça.</p>
+<ul>
+<li><strong>Fonte:</strong> <code>raw.indicador_justica</code> (sem staging)</li>
+<li><strong>Grão:</strong> Ano × Indicador</li>
+<li>Normaliza formato numérico brasileiro (<code>.</code> → milhares, <code>,</code> → decimal)</li>
+</ul>
+<h2 id="bridges-nn">Bridges (N:N)<a class="headerlink" href="#bridges-nn" title="Permanent link">&para;</a></h2>
+<h3 id="bridge_case_crime_type">bridge_case_crime_type<a class="headerlink" href="#bridge_case_crime_type" title="Permanent link">&para;</a></h3>
+<p>Liga processos judiciais a tipos de crime.</p>
+<ul>
+<li><strong>Fonte:</strong> <code>fct_court_case</code> (campo <code>assuntos_raw</code>)</li>
+<li>Extrai códigos de crime do JSON via <code>regexp_matches()</code> com padrão <code>'codigo':\s*(\d+)</code></li>
+<li><strong>Colunas:</strong> <code>case_sk</code> → <code>fct_court_case</code>, <code>crime_code</code> → <code>dim_crime_type</code></li>
+</ul>
+<h3 id="bridge_notificacao_violence_type">bridge_notificacao_violence_type<a class="headerlink" href="#bridge_notificacao_violence_type" title="Permanent link">&para;</a></h3>
+<p>Liga notificações a tipos de violência.</p>
+<ul>
+<li><strong>Fonte:</strong> <code>fct_notificacao_violencia</code></li>
+<li>Unpivot de 8 colunas booleanas via <code>UNION ALL</code></li>
+<li><strong>Colunas:</strong> <code>notification_sk</code>, <code>violence_type</code> (fisica, psicologica, sexual, etc.)</li>
+</ul>
+<h3 id="bridge_notificacao_relationship">bridge_notificacao_relationship<a class="headerlink" href="#bridge_notificacao_relationship" title="Permanent link">&para;</a></h3>
+<p>Liga notificações a relacionamentos com o agressor.</p>
+<ul>
+<li><strong>Fonte:</strong> <code>fct_notificacao_violencia</code> + <code>dim_relationship</code></li>
+<li>Unpivot de 10 colunas booleanas via <code>UNION ALL</code></li>
+<li>Join com <code>dim_relationship</code> para obter <code>relationship_sk</code></li>
+<li><strong>Colunas:</strong> <code>notification_sk</code>, <code>relationship_sk</code></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../staging/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Staging (dbt)">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Staging (dbt)
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../data-dictionary/" class="md-footer__link md-footer__link--next" aria-label="Next: Como Ler">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Como Ler
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2025 Observatório do Feminicídio RJ
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/igorbenav/OFRJ" target="_blank" rel="noopener" title="OFRJ no GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["navigation.instant","navigation.tracking","navigation.tabs","navigation.sections","navigation.top","navigation.footer","toc.follow","search.suggest","search.highlight","content.code.copy"],"search":"../../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.5fcf0de6.min.js"></script>
+      
+    
+  </body>
+</html>
