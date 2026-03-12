@@ -37,7 +37,28 @@
         <loc>https://docs.ofrj.org/data-sources/sim/</loc>
       </url>
       <url>
+        <loc>https://docs.ofrj.org/data-sources/ligue190/</loc>
+      </url>
+      <url>
         <loc>https://docs.ofrj.org/data-sources/sinesp/</loc>
+      </url>
+      <url>
+        <loc>https://docs.ofrj.org/data-sources/censo-familias/</loc>
+      </url>
+      <url>
+        <loc>https://docs.ofrj.org/data-sources/populacao/</loc>
+      </url>
+      <url>
+        <loc>https://docs.ofrj.org/data-sources/cadunico/</loc>
+      </url>
+      <url>
+        <loc>https://docs.ofrj.org/data-sources/ibge-indicators/</loc>
+      </url>
+      <url>
+        <loc>https://docs.ofrj.org/data-sources/disque180/</loc>
+      </url>
+      <url>
+        <loc>https://docs.ofrj.org/data-sources/legislacao/</loc>
       </url>
       <url>
         <loc>https://docs.ofrj.org/data-sources/reference/</loc>

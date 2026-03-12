@@ -864,6 +864,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../data-sources/ligue190/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ligue 190 — Denúncias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../data-sources/sinesp/" class="md-nav__link">
         
   
@@ -872,6 +900,174 @@
     
   
     SINESP — Estatísticas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-sources/censo-familias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Censo — Famílias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-sources/populacao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Censo — População
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-sources/cadunico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CadÚnico — Mulheres
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-sources/ibge-indicators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IBGE — Indicadores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-sources/disque180/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Disque 180 — Denúncias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-sources/legislacao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Legislação Municipal
   
 
     
@@ -1865,6 +2061,16 @@ graph LR
         F5["fct_crime_mensal"]
         F6["fct_indicador_justica"]
         F7["fct_obito_externo"]
+        F8["fct_crime_municipal_anual"]
+        F9["fct_ligue_190"]
+        F10["fct_indicador_municipal"]
+        F11["fct_cadunico_mulheres"]
+        F12["fct_censo_familias"]
+        F13["fct_populacao_municipal"]
+        F14["fct_legislacao_municipal"]
+        F15["fct_taxa_municipal"]
+        F16["fct_disque180_municipal"]
+        F17["fct_disque180_perfil"]
     end
 
     subgraph Bridges
@@ -1879,8 +2085,22 @@ graph LR
     D1 --&gt; F4
     D1 --&gt; F5
     D1 --&gt; F7
+    D1 --&gt; F8
+    D1 --&gt; F9
+    D1 --&gt; F10
     D2 --&gt; F4
     D2 --&gt; F5
+    D2 --&gt; F8
+    D2 --&gt; F9
+    D2 --&gt; F10
+    D2 --&gt; F11
+    D2 --&gt; F12
+    D2 --&gt; F13
+    D2 --&gt; F14
+    D2 --&gt; F15
+    D2 --&gt; F16
+    D2 --&gt;|"notificação"| F3
+    D2 --&gt;|"ocorrência"| F3
     D2 --&gt;|"residência"| F7
     D2 --&gt;|"ocorrência"| F7
     D5 --&gt; F2

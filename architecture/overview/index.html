@@ -961,6 +961,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data-sources/ligue190/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ligue 190 — Denúncias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../data-sources/sinesp/" class="md-nav__link">
         
   
@@ -969,6 +997,174 @@
     
   
     SINESP — Estatísticas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/censo-familias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Censo — Famílias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/populacao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Censo — População
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/cadunico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CadÚnico — Mulheres
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/ibge-indicators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IBGE — Indicadores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/disque180/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Disque 180 — Denúncias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/legislacao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Legislação Municipal
   
 
     
@@ -1795,17 +1991,17 @@ graph TB
 <tr>
 <td><code>raw</code></td>
 <td>Python (ingestão)</td>
-<td>14 tabelas com dados brutos</td>
+<td>25 tabelas com dados brutos</td>
 </tr>
 <tr>
 <td><code>staging</code></td>
 <td>dbt (views)</td>
-<td>7 views com dados limpos</td>
+<td>16 views com dados limpos</td>
 </tr>
 <tr>
 <td><code>marts</code></td>
 <td>dbt (tabelas)</td>
-<td>9 dimensões + 7 fatos + 3 bridges</td>
+<td>9 dimensões + 17 fatos + 3 bridges</td>
 </tr>
 </tbody>
 </table>
@@ -1818,8 +2014,8 @@ graph TB
 <p>Star schema com:</p>
 <ul>
 <li><strong>9 dimensões</strong> - data, localização, tipo de crime, relacionamento, desfecho, tipo de local, perfil da vítima, flags do caso, rede de proteção</li>
-<li><strong>5 fatos transacionais</strong> - processos judiciais, medidas protetivas, notificações SINAN, óbitos externos SIM, feminicídios ISP</li>
-<li><strong>2 fatos periódicos</strong> - crimes mensais SINESP, indicadores de justiça</li>
+<li><strong>6 fatos transacionais</strong> - processos judiciais, medidas protetivas, notificações SINAN, óbitos externos SIM, feminicídios ISP, chamadas Ligue 190</li>
+<li><strong>11 fatos periódicos</strong> - crimes mensais SINESP, crimes municipais anuais ISP, indicadores municipais IBGE, censo famílias, CadÚnico mulheres, população municipal, legislação municipal, Disque 180 municipal, Disque 180 perfil, taxas per capita, indicadores de justiça</li>
 <li><strong>3 bridges</strong> - caso/tipo de crime, notificação/tipo de violência, notificação/relacionamento</li>
 </ul>
 <p>Diagrama completo em <a href="../data-flow/">Fluxo de Dados</a> e tabelas detalhadas no <a href="../../data-dictionary/">Dicionário de Dados</a>.</p>

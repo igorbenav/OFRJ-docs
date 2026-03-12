@@ -874,10 +874,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#arquivo-fonte" class="md-nav__link">
+  <a href="#arquivos-fonte" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Arquivo Fonte
+        Arquivos Fonte
       
     </span>
   </a>
@@ -968,6 +968,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#comparativo-municipal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparativo Municipal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ingestao" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1022,6 +1033,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../ligue190/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ligue 190 — Denúncias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sinesp/" class="md-nav__link">
         
   
@@ -1030,6 +1069,174 @@
     
   
     SINESP — Estatísticas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../censo-familias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Censo — Famílias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../populacao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Censo — População
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cadunico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CadÚnico — Mulheres
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ibge-indicators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IBGE — Indicadores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../disque180/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Disque 180 — Denúncias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../legislacao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Legislação Municipal
   
 
     
@@ -1703,10 +1910,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#arquivo-fonte" class="md-nav__link">
+  <a href="#arquivos-fonte" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Arquivo Fonte
+        Arquivos Fonte
       
     </span>
   </a>
@@ -1797,6 +2004,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#comparativo-municipal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparativo Municipal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ingestao" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1823,9 +2041,12 @@
                   
 
 <h1 id="isp-policia">ISP - Polícia<a class="headerlink" href="#isp-policia" title="Permanent link">&para;</a></h1>
-<p>Dados do <strong>Instituto de Segurança Pública do Estado do Rio de Janeiro</strong> (ISP-RJ) sobre vítimas de feminicídio registradas pela polícia.</p>
-<p>Diferente das outras fontes, o grão é <strong>por vítima</strong> (não por caso). Um caso policial pode ter múltiplas vítimas.</p>
-<h2 id="arquivo-fonte">Arquivo Fonte<a class="headerlink" href="#arquivo-fonte" title="Permanent link">&para;</a></h2>
+<p>Dados do <strong>Instituto de Segurança Pública do Estado do Rio de Janeiro</strong> (ISP-RJ). Dois datasets:</p>
+<ol>
+<li><strong>Feminicídio</strong> — registros individuais por vítima (grão transacional)</li>
+<li><strong>Comparativo Municipal</strong> — estatísticas anuais por município e tipo de crime (grão agregado)</li>
+</ol>
+<h2 id="arquivos-fonte">Arquivos Fonte<a class="headerlink" href="#arquivos-fonte" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -1840,14 +2061,19 @@
 <td><code>raw.isp_feminicidio</code></td>
 <td>Registros policiais de feminicídio</td>
 </tr>
+<tr>
+<td><code>data/isp/isp_comparativo_municipal.csv</code></td>
+<td><code>raw.isp_comparativo_municipal</code></td>
+<td>Estatísticas anuais por município e crime</td>
+</tr>
 </tbody>
 </table>
-<p><strong>Formato:</strong> CSV com delimitador <code>;</code>, encoding <code>latin-1</code>.</p>
+<p><strong>Formato feminicídio:</strong> CSV com delimitador <code>;</code>, encoding <code>latin-1</code>.</p>
+<p><strong>Formato comparativo:</strong> CSV padrão (<code>,</code>, UTF-8). Wide format com colunas de ano, convertido para long no staging.</p>
 <h2 id="volume">Volume<a class="headerlink" href="#volume" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>~770 vítimas</strong> registradas</li>
-<li><strong>Período:</strong> 2016-2025</li>
-<li>Grão: 1 registro por vítima</li>
+<li><strong>~770 vítimas</strong> de feminicídio registradas (2016-2025)</li>
+<li><strong>5.888 registros</strong> no comparativo municipal (92 municípios × 8 crimes × 8 anos, 2018-2025)</li>
 </ul>
 <h2 id="identificadores">Identificadores<a class="headerlink" href="#identificadores" title="Permanent link">&para;</a></h2>
 <table>
@@ -1938,11 +2164,48 @@
 <li><strong>Raça:</strong> texto (<code>'Branca'</code>, <code>'Preta'</code>, etc.) → códigos IBGE (<code>1</code>-<code>5</code>, <code>X</code>)</li>
 <li><strong>Horário:</strong> valida formato <code>HH:MM</code> ou <code>HH:MM:SS</code>, NULL se inválido</li>
 </ul>
+<h2 id="comparativo-municipal">Comparativo Municipal<a class="headerlink" href="#comparativo-municipal" title="Permanent link">&para;</a></h2>
+<p>Estatísticas anuais de crimes contra mulheres por município, 2018-2025.</p>
+<p><strong>8 tipos de crime:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Delito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Assédio sexual</td>
+</tr>
+<tr>
+<td>Constrangimento ilegal</td>
+</tr>
+<tr>
+<td>Difamação</td>
+</tr>
+<tr>
+<td>Feminicídio</td>
+</tr>
+<tr>
+<td>Homicídio doloso</td>
+</tr>
+<tr>
+<td>Tentativa de feminicídio</td>
+</tr>
+<tr>
+<td>Tentativa de homicídio</td>
+</tr>
+<tr>
+<td>Violação de domicílio</td>
+</tr>
+</tbody>
+</table>
+<p>O arquivo original vem em formato wide (uma coluna por ano) com colunas duplicadas e de diff. O loader remove duplicatas e diffs; o staging faz unpivot para formato long (município × crime × ano → contagem).</p>
 <h2 id="ingestao">Ingestão<a class="headerlink" href="#ingestao" title="Permanent link">&para;</a></h2>
 <p>Loader: <code>src/ingestion/loaders/isp.py</code></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>./scripts/ingest.sh<span class="w"> </span>isp
 </code></pre></div>
-<p>Carga simples, lê o CSV inteiro e carrega na tabela <code>raw</code>.</p>
+<p>Carrega ambos os arquivos (feminicídio + comparativo municipal).</p>
 
 
 

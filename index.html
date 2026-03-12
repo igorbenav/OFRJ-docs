@@ -954,6 +954,34 @@
   
   
     <li class="md-nav__item">
+      <a href="./data-sources/ligue190/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ligue 190 — Denúncias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="./data-sources/sinesp/" class="md-nav__link">
         
   
@@ -962,6 +990,174 @@
     
   
     SINESP — Estatísticas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./data-sources/censo-familias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Censo — Famílias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./data-sources/populacao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Censo — População
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./data-sources/cadunico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CadÚnico — Mulheres
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./data-sources/ibge-indicators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IBGE — Indicadores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./data-sources/disque180/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Disque 180 — Denúncias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./data-sources/legislacao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Legislação Municipal
   
 
     
@@ -1695,7 +1891,7 @@
 
 <h1 id="observatorio-do-feminicidio-rj">Observatório do Feminicídio RJ<a class="headerlink" href="#observatorio-do-feminicidio-rj" title="Permanent link">&para;</a></h1>
 <p>Data warehouse para análise da violência contra a mulher no estado do Rio de Janeiro.</p>
-<p>Pipeline que combina <strong>7 fontes públicas</strong> (justiça, saúde, mortalidade, polícia, segurança pública, geografia e rede de proteção) em um modelo dimensional. Ingere CSV/Excel via Python, carrega no PostgreSQL e transforma com dbt em um star schema com 9 dimensões, 7 fatos e 3 bridges.</p>
+<p>Pipeline que combina <strong>14 fontes públicas</strong> (justiça, saúde, mortalidade, polícia, denúncias, segurança pública, indicadores municipais, censo famílias, censo população, CadÚnico, legislação, geografia e rede de proteção) em um modelo dimensional. Ingere CSV/Excel via Python, carrega no PostgreSQL e transforma com dbt em um star schema com 9 dimensões, 17 fatos e 3 bridges.</p>
 <h2 id="links-rapidos">Links Rápidos<a class="headerlink" href="#links-rapidos" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1772,22 +1968,26 @@
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│       ├── sinan.py
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│       ├── sim.py
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│       ├── isp.py
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│       ├── sinesp.py
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│       └── reference.py
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>├── dbt_project/            # Transformações dbt
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│   ├── models/
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│   │   ├── staging/        # Limpeza dos dados (views)
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│   │   └── marts/          # Modelo dimensional (tabelas)
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│   │       ├── core/       # Dimensões
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│   │       ├── violence/   # Fatos transacionais
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│   │       └── aggregate/  # Fatos periódicos
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│   └── macros/             # SQL reutilizável
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>├── scripts/                # Scripts de operação
-<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>├── data/                   # Arquivos fonte (gitignored)
-<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>├── docs/                   # Esta documentação
-<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>└── docker-compose.yml      # PostgreSQL + pgAdmin
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│       ├── cadunico.py
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│       ├── censo_familias.py
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│       ├── ligue190.py
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│       ├── disque180.py
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│       ├── sinesp.py
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│       └── reference.py
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>├── dbt_project/            # Transformações dbt
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│   ├── models/
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│   │   ├── staging/        # Limpeza dos dados (views)
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│   │   └── marts/          # Modelo dimensional (tabelas)
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│   │       ├── core/       # Dimensões
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>│   │       ├── violence/   # Fatos transacionais
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>│   │       └── aggregate/  # Fatos periódicos
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>│   └── macros/             # SQL reutilizável
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>│
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>├── scripts/                # Scripts de operação
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>├── data/                   # Arquivos fonte (gitignored)
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>├── docs/                   # Esta documentação
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>└── docker-compose.yml      # PostgreSQL + pgAdmin
 </code></pre></div>
 <h2 id="volumes-de-dados">Volumes de Dados<a class="headerlink" href="#volumes-de-dados" title="Permanent link">&para;</a></h2>
 <table>
@@ -1830,9 +2030,54 @@
 <td>1996-2024</td>
 </tr>
 <tr>
+<td>Ligue 190 - Chamadas</td>
+<td>~26.589 chamadas</td>
+<td>2020-2024</td>
+</tr>
+<tr>
+<td>IBGE - Indicadores Municipais</td>
+<td>368 registros (4 indicadores × 92 municípios)</td>
+<td>2023-2024</td>
+</tr>
+<tr>
+<td>Censo - Famílias Mulheres</td>
+<td>1.840 registros (20 categorias × 92 municípios)</td>
+<td>2022</td>
+</tr>
+<tr>
+<td>Disque 180 — Municipal</td>
+<td>180 registros (90 municípios × 2 anos)</td>
+<td>2025-2026</td>
+</tr>
+<tr>
+<td>Disque 180 — Perfil</td>
+<td>200 registros (perfis vítima/agressor)</td>
+<td>2025</td>
+</tr>
+<tr>
+<td>Legislação Municipal</td>
+<td>90 municípios com flag de legislação</td>
+<td>atual</td>
+</tr>
+<tr>
+<td>Censo - População Municipal</td>
+<td>4.508 registros (sexo×idade + raça mulheres × 92 municípios)</td>
+<td>2022</td>
+</tr>
+<tr>
+<td>CadÚnico - Mulheres Chefes</td>
+<td>2.300 registros (25 categorias × 92 municípios)</td>
+<td>atual</td>
+</tr>
+<tr>
 <td>SINESP - Crimes</td>
 <td>~91.000 agregados</td>
 <td>2015-2025</td>
+</tr>
+<tr>
+<td>Taxas Per Capita</td>
+<td>2.413 registros (4 indicadores × municípios × anos)</td>
+<td>calculado</td>
 </tr>
 <tr>
 <td>Rede de Proteção</td>

@@ -864,6 +864,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data-sources/ligue190/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ligue 190 — Denúncias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../data-sources/sinesp/" class="md-nav__link">
         
   
@@ -872,6 +900,174 @@
     
   
     SINESP — Estatísticas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/censo-familias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Censo — Famílias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/populacao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Censo — População
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/cadunico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CadÚnico — Mulheres
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/ibge-indicators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IBGE — Indicadores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/disque180/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Disque 180 — Denúncias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/legislacao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Legislação Municipal
   
 
     
@@ -2025,8 +2221,13 @@
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    ├── sinan.py
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    ├── sim.py
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    ├── isp.py
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    ├── sinesp.py
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    └── reference.py
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    ├── cadunico.py
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    ├── censo_familias.py
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    ├── populacao.py
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    ├── ligue190.py
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    ├── disque180.py
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    ├── sinesp.py
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    └── reference.py
 </code></pre></div>
 <h2 id="configuracao-configpy">Configuração (<code>config.py</code>)<a class="headerlink" href="#configuracao-configpy" title="Permanent link">&para;</a></h2>
 <p>Toda a configuração é carregada das variáveis de ambiente uma única vez na importação do módulo:</p>
@@ -2175,9 +2376,14 @@
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="s2">&quot;sinan&quot;</span><span class="p">:</span> <span class="n">load_sinan</span><span class="p">,</span>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="s2">&quot;sim&quot;</span><span class="p">:</span> <span class="n">load_sim</span><span class="p">,</span>
 <a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="s2">&quot;isp&quot;</span><span class="p">:</span> <span class="n">load_isp</span><span class="p">,</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="s2">&quot;sinesp&quot;</span><span class="p">:</span> <span class="n">load_sinesp</span><span class="p">,</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="s2">&quot;reference&quot;</span><span class="p">:</span> <span class="n">load_reference_data</span><span class="p">,</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="p">}</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="s2">&quot;cadunico&quot;</span><span class="p">:</span> <span class="n">load_cadunico</span><span class="p">,</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="s2">&quot;censo_familias&quot;</span><span class="p">:</span> <span class="n">load_censo_familias</span><span class="p">,</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    <span class="s2">&quot;populacao&quot;</span><span class="p">:</span> <span class="n">load_populacao</span><span class="p">,</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    <span class="s2">&quot;ligue190&quot;</span><span class="p">:</span> <span class="n">load_ligue190</span><span class="p">,</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="s2">&quot;disque180&quot;</span><span class="p">:</span> <span class="n">load_disque180</span><span class="p">,</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="s2">&quot;sinesp&quot;</span><span class="p">:</span> <span class="n">load_sinesp</span><span class="p">,</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="s2">&quot;reference&quot;</span><span class="p">:</span> <span class="n">load_reference_data</span><span class="p">,</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="p">}</span>
 </code></pre></div>
 <h3 id="saida">Saída<a class="headerlink" href="#saida" title="Permanent link">&para;</a></h3>
 <p>Ao final da execução, o orquestrador imprime um resumo:</p>
@@ -2217,7 +2423,27 @@
 </tr>
 <tr>
 <td><code>isp</code></td>
-<td>Encoding <code>latin-1</code>, delimitador <code>;</code>, todos os campos como string</td>
+<td>2 arquivos: feminicídio (<code>;</code>, latin-1) + comparativo municipal (CSV padrão, remove colunas duplicadas/diff)</td>
+</tr>
+<tr>
+<td><code>cadunico</code></td>
+<td>3 CSVs (raça, idade, renda), extrai categorias da linha 0, renomeia colunas</td>
+</tr>
+<tr>
+<td><code>censo_familias</code></td>
+<td>5 Excels IBGE (formato nested + simple), parser customizado, consolida em long format</td>
+</tr>
+<tr>
+<td><code>populacao</code></td>
+<td>2 Excels Censo 2022 (sexo×idade wide→long, raça mulheres), consolida em long format</td>
+</tr>
+<tr>
+<td><code>ligue190</code></td>
+<td>1 arquivo Excel, apenas sheet "Dados", chamadas de violência doméstica</td>
+</tr>
+<tr>
+<td><code>disque180</code></td>
+<td>1 Excel com 18 sheets: 2 municipais (denúncias por município×ano) + 16 perfil (EAV: sujeito×dimensão×categoria) → 2 raw tables</td>
 </tr>
 <tr>
 <td><code>sinesp</code></td>
@@ -2225,7 +2451,7 @@
 </tr>
 <tr>
 <td><code>reference</code></td>
-<td>4 arquivos independentes (IBGE ×2, Rede, Justiça), formatos variados</td>
+<td>5 arquivos independentes (IBGE ×2, Rede, Legislação, Justiça), formatos variados</td>
 </tr>
 </tbody>
 </table>

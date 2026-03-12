@@ -864,6 +864,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data-sources/ligue190/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ligue 190 — Denúncias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../data-sources/sinesp/" class="md-nav__link">
         
   
@@ -872,6 +900,174 @@
     
   
     SINESP — Estatísticas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/censo-familias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Censo — Famílias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/populacao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Censo — População
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/cadunico/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CadÚnico — Mulheres
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/ibge-indicators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IBGE — Indicadores
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/disque180/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Disque 180 — Denúncias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/legislacao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Legislação Municipal
   
 
     
@@ -1901,7 +2097,7 @@
 </table>
 <h2 id="dim_location">dim_location<a class="headerlink" href="#dim_location" title="Permanent link">&para;</a></h2>
 <p>92 municípios do Rio de Janeiro com hierarquia geográfica e dados censitários.</p>
-<p><strong>Fontes:</strong> <code>raw.ibge_municipio</code> + <code>raw.ibge_censo</code></p>
+<p><strong>Fontes:</strong> <code>raw.ibge_municipio</code> + <code>raw.ibge_censo</code> + <code>raw.legislacao_municipal</code></p>
 <table>
 <thead>
 <tr>
@@ -1994,6 +2190,12 @@
 <td><code>density_hab_km2</code></td>
 <td>FLOAT</td>
 <td>Densidade demográfica (hab/km²)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>has_legislation</code></td>
+<td>BOOLEAN</td>
+<td>Possui legislação específica sobre violência contra a mulher</td>
 <td></td>
 </tr>
 </tbody>
@@ -2378,7 +2580,7 @@
 </tbody>
 </table>
 <h2 id="dim_care_facility">dim_care_facility<a class="headerlink" href="#dim_care_facility" title="Permanent link">&para;</a></h2>
-<p>442 equipamentos da rede de proteção. Dimensão referencial, <strong>não conectada a fatos</strong>.</p>
+<p>442 equipamentos da rede de proteção. Conectada a <code>fct_taxa_municipal</code> (taxa de equipamentos por 100K hab).</p>
 <p><strong>Fonte:</strong> <code>raw.rede_protecao</code></p>
 <table>
 <thead>
