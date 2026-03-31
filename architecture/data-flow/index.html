@@ -2386,7 +2386,7 @@ graph LR
 </tr>
 <tr>
 <td><code>dim_location</code></td>
-<td><code>fct_notificacao_violencia</code> (×2: notificação e ocorrência)</td>
+<td><code>fct_notificacao_violencia</code> (×3: notificação, ocorrência e residência)</td>
 <td><code>ibge_code_6</code></td>
 </tr>
 <tr>
@@ -2698,6 +2698,7 @@ erDiagram
     fct_notificacao_violencia ||--o{ dim_date : "occurrence_date"
     fct_notificacao_violencia ||--o{ dim_location : "notification"
     fct_notificacao_violencia ||--o{ dim_location : "occurrence"
+    fct_notificacao_violencia ||--o{ dim_location : "residence"
     fct_notificacao_violencia ||--o{ dim_outcome : "outcome"
     fct_notificacao_violencia ||--o{ dim_location_type : "location_type"
     fct_notificacao_violencia ||--o{ dim_victim_profile : "victim"

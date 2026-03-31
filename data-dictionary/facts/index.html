@@ -2411,7 +2411,7 @@
 </tbody>
 </table>
 <h3 id="fct_notificacao_violencia">fct_notificacao_violencia<a class="headerlink" href="#fct_notificacao_violencia" title="Permanent link">&para;</a></h3>
-<p>Notificações de violência do SINAN. Grão: 1 por notificação.</p>
+<p>Notificações de violência do SINAN. Grão: 1 por notificação. Inclui tipos de violência, meios de agressão, detalhamento sexual, relacionamentos, perfil do agressor e encaminhamentos.</p>
 <p><strong>Fonte:</strong> <code>stg_sinan__notificacao</code></p>
 <table>
 <thead>
@@ -2442,6 +2442,12 @@
 <td></td>
 </tr>
 <tr>
+<td><strong>FKs de data</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
 <td><code>notification_date_sk</code></td>
 <td>INT</td>
 <td>FK → <code>dim_date</code> (data notificação)</td>
@@ -2460,27 +2466,9 @@
 <td></td>
 </tr>
 <tr>
-<td><code>outcome_sk</code></td>
-<td>INT</td>
-<td>FK → <code>dim_outcome</code> (evolução SINAN)</td>
+<td><strong>FKs de localização</strong></td>
 <td></td>
-</tr>
-<tr>
-<td><code>location_type_sk</code></td>
-<td>INT</td>
-<td>FK → <code>dim_location_type</code></td>
 <td></td>
-</tr>
-<tr>
-<td><code>victim_profile_sk</code></td>
-<td>TEXT</td>
-<td>FK → <code>dim_victim_profile</code></td>
-<td></td>
-</tr>
-<tr>
-<td><code>case_flags_sk</code></td>
-<td>TEXT</td>
-<td>FK → <code>dim_case_flags</code></td>
 <td></td>
 </tr>
 <tr>
@@ -2496,27 +2484,177 @@
 <td><code>relationships</code></td>
 </tr>
 <tr>
-<td><code>notification_municipality_code</code></td>
+<td><code>residence_location_sk</code></td>
+<td>INT</td>
+<td>FK → <code>dim_location</code> (município residência)</td>
+<td><code>relationships</code></td>
+</tr>
+<tr>
+<td><code>location_type_sk</code></td>
+<td>INT</td>
+<td>FK → <code>dim_location_type</code> (local: casa, rua, etc.)</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>FKs de perfil/flags</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>victim_profile_sk</code></td>
+<td>TEXT</td>
+<td>FK → <code>dim_victim_profile</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>case_flags_sk</code></td>
+<td>TEXT</td>
+<td>FK → <code>dim_case_flags</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>outcome_sk</code></td>
+<td>INT</td>
+<td>FK → <code>dim_outcome</code> (evolução SINAN)</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Datas (referência)</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>notification_date</code></td>
+<td>DATE</td>
+<td>Data da notificação</td>
+<td></td>
+</tr>
+<tr>
+<td><code>occurrence_date</code></td>
+<td>DATE</td>
+<td>Data da ocorrência</td>
+<td></td>
+</tr>
+<tr>
+<td><code>death_date</code></td>
+<td>DATE</td>
+<td>Data do óbito</td>
+<td></td>
+</tr>
+<tr>
+<td><code>investigation_date</code></td>
+<td>DATE</td>
+<td>Data de início da investigação</td>
+<td></td>
+</tr>
+<tr>
+<td><code>closure_date</code></td>
+<td>DATE</td>
+<td>Data de encerramento do caso</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Localização (referência)</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>notification_municipio_code</code></td>
 <td>TEXT</td>
 <td>Código IBGE município notificação</td>
 <td></td>
 </tr>
 <tr>
-<td><code>occurrence_municipality_code</code></td>
+<td><code>occurrence_municipio_code</code></td>
 <td>TEXT</td>
 <td>Código IBGE município ocorrência</td>
 <td></td>
 </tr>
 <tr>
+<td><code>residence_municipio_code</code></td>
+<td>TEXT</td>
+<td>Código IBGE município residência</td>
+<td></td>
+</tr>
+<tr>
+<td><code>health_unit_code</code></td>
+<td>TEXT</td>
+<td>Código CNES da unidade de saúde</td>
+<td></td>
+</tr>
+<tr>
+<td><code>occurrence_time</code></td>
+<td>TEXT</td>
+<td>Horário da ocorrência</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Perfil da vítima</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>victim_age_code</code></td>
+<td>TEXT</td>
+<td>Idade codificada (NU_IDADE_N)</td>
+<td></td>
+</tr>
+<tr>
 <td><code>victim_sex</code></td>
 <td>TEXT</td>
-<td>Sexo (referência)</td>
+<td>Sexo</td>
 <td></td>
 </tr>
 <tr>
 <td><code>victim_birth_year</code></td>
+<td>INT</td>
+<td>Ano de nascimento</td>
+<td></td>
+</tr>
+<tr>
+<td><code>victim_race_code</code></td>
 <td>TEXT</td>
-<td>Ano de nascimento (referência)</td>
+<td>Raça/cor</td>
+<td></td>
+</tr>
+<tr>
+<td><code>victim_education_code</code></td>
+<td>TEXT</td>
+<td>Escolaridade</td>
+<td></td>
+</tr>
+<tr>
+<td><code>victim_marital_status_code</code></td>
+<td>TEXT</td>
+<td>Estado civil</td>
+<td></td>
+</tr>
+<tr>
+<td><code>victim_pregnancy_code</code></td>
+<td>TEXT</td>
+<td>Gestação</td>
+<td></td>
+</tr>
+<tr>
+<td><code>victim_sexual_orientation</code></td>
+<td>TEXT</td>
+<td>Orientação sexual</td>
+<td></td>
+</tr>
+<tr>
+<td><code>victim_gender_identity</code></td>
+<td>TEXT</td>
+<td>Identidade de gênero</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Tipos de violência</strong></td>
+<td>BOOLEAN</td>
+<td></td>
 <td></td>
 </tr>
 <tr>
@@ -2532,19 +2670,19 @@
 <td></td>
 </tr>
 <tr>
+<td><code>has_torture</code></td>
+<td>BOOLEAN</td>
+<td>Tortura</td>
+<td></td>
+</tr>
+<tr>
 <td><code>has_sexual_violence</code></td>
 <td>BOOLEAN</td>
 <td>Violência sexual</td>
 <td></td>
 </tr>
 <tr>
-<td><code>has_torture_violence</code></td>
-<td>BOOLEAN</td>
-<td>Tortura</td>
-<td></td>
-</tr>
-<tr>
-<td><code>has_trafficking_violence</code></td>
+<td><code>has_trafficking</code></td>
 <td>BOOLEAN</td>
 <td>Tráfico</td>
 <td></td>
@@ -2556,7 +2694,7 @@
 <td></td>
 </tr>
 <tr>
-<td><code>has_neglect_violence</code></td>
+<td><code>has_neglect</code></td>
 <td>BOOLEAN</td>
 <td>Negligência</td>
 <td></td>
@@ -2564,73 +2702,301 @@
 <tr>
 <td><code>has_other_violence</code></td>
 <td>BOOLEAN</td>
-<td>Outra violência</td>
+<td>Outra</td>
 <td></td>
 </tr>
 <tr>
-<td><code>rel_spouse</code></td>
-<td>BOOLEAN</td>
-<td>Cônjuge</td>
+<td><strong>Autolesão e motivação</strong></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 <tr>
-<td><code>rel_partner</code></td>
+<td><code>is_self_harm</code></td>
 <td>BOOLEAN</td>
-<td>Namorado(a)</td>
+<td>Lesão autoprovocada</td>
 <td></td>
 </tr>
 <tr>
-<td><code>rel_father</code></td>
-<td>BOOLEAN</td>
-<td>Pai</td>
+<td><code>violence_motivation_code</code></td>
+<td>TEXT</td>
+<td>Motivação (sexismo, racismo, etc.)</td>
 <td></td>
 </tr>
 <tr>
-<td><code>rel_mother</code></td>
+<td><strong>Meios de agressão</strong></td>
 <td>BOOLEAN</td>
-<td>Mãe</td>
+<td></td>
 <td></td>
 </tr>
 <tr>
-<td><code>rel_caretaker</code></td>
+<td><code>ag_physical_force</code></td>
 <td>BOOLEAN</td>
-<td>Cuidador</td>
+<td>Força corporal</td>
 <td></td>
 </tr>
 <tr>
-<td><code>rel_employer</code></td>
+<td><code>ag_strangulation</code></td>
 <td>BOOLEAN</td>
-<td>Patrão</td>
+<td>Enforcamento</td>
 <td></td>
 </tr>
 <tr>
-<td><code>rel_sibling</code></td>
+<td><code>ag_blunt_object</code></td>
 <td>BOOLEAN</td>
-<td>Irmão</td>
+<td>Objeto contundente</td>
 <td></td>
 </tr>
 <tr>
-<td><code>rel_acquaintance</code></td>
+<td><code>ag_sharp_object</code></td>
 <td>BOOLEAN</td>
-<td>Amigo/Conhecido</td>
+<td>Objeto perfuro-cortante</td>
 <td></td>
 </tr>
 <tr>
-<td><code>rel_stranger</code></td>
+<td><code>ag_hot_substance</code></td>
 <td>BOOLEAN</td>
-<td>Desconhecido</td>
+<td>Substância/objeto quente</td>
 <td></td>
 </tr>
 <tr>
-<td><code>rel_other</code></td>
+<td><code>ag_poisoning</code></td>
 <td>BOOLEAN</td>
-<td>Outro</td>
+<td>Envenenamento</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ag_firearm</code></td>
+<td>BOOLEAN</td>
+<td>Arma de fogo</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ag_threat</code></td>
+<td>BOOLEAN</td>
+<td>Ameaça</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Violência sexual (detalhe)</strong></td>
+<td>BOOLEAN</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>sv_harassment</code></td>
+<td>BOOLEAN</td>
+<td>Assédio sexual</td>
+<td></td>
+</tr>
+<tr>
+<td><code>sv_rape</code></td>
+<td>BOOLEAN</td>
+<td>Estupro</td>
+<td></td>
+</tr>
+<tr>
+<td><code>sv_child_pornography</code></td>
+<td>BOOLEAN</td>
+<td>Pornografia infantil</td>
+<td></td>
+</tr>
+<tr>
+<td><code>sv_exploitation</code></td>
+<td>BOOLEAN</td>
+<td>Exploração sexual</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Relacionamentos</strong></td>
+<td>BOOLEAN</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>rel_spouse</code> / <code>rel_ex_spouse</code></td>
+<td>BOOLEAN</td>
+<td>Cônjuge / Ex-cônjuge</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rel_partner</code> / <code>rel_ex_partner</code></td>
+<td>BOOLEAN</td>
+<td>Namorado(a) / Ex-namorado(a)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rel_father</code> / <code>rel_mother</code></td>
+<td>BOOLEAN</td>
+<td>Pai / Mãe</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rel_stepfather</code> / <code>rel_stepmother</code></td>
+<td>BOOLEAN</td>
+<td>Padrasto / Madrasta</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rel_child</code> / <code>rel_sibling</code></td>
+<td>BOOLEAN</td>
+<td>Filho(a) / Irmão(ã)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rel_friend</code> / <code>rel_unknown</code></td>
+<td>BOOLEAN</td>
+<td>Amigo/Conhecido / Desconhecido</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rel_caregiver</code> / <code>rel_employer</code></td>
+<td>BOOLEAN</td>
+<td>Cuidador / Patrão</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rel_institutional</code> / <code>rel_police</code></td>
+<td>BOOLEAN</td>
+<td>Institucional / Policial</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rel_self</code> / <code>rel_other</code></td>
+<td>BOOLEAN</td>
+<td>Própria pessoa / Outro</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Perfil do agressor</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>aggressor_sex_code</code></td>
+<td>TEXT</td>
+<td>Sexo do provável autor</td>
+<td></td>
+</tr>
+<tr>
+<td><code>aggressor_age_group_code</code></td>
+<td>TEXT</td>
+<td>Ciclo de vida do provável autor</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Classificação e desfecho</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>final_classification_code</code></td>
+<td>TEXT</td>
+<td>Classificação final do caso</td>
+<td></td>
+</tr>
+<tr>
+<td><code>outcome_code</code></td>
+<td>TEXT</td>
+<td>Código de evolução (1–3, 9)</td>
 <td></td>
 </tr>
 <tr>
 <td><code>is_repeat_violence</code></td>
 <td>BOOLEAN</td>
 <td>Violência de repetição</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Encaminhamentos</strong></td>
+<td>BOOLEAN</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ref_health</code></td>
+<td>BOOLEAN</td>
+<td>Rede de saúde</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ref_social_assistance</code></td>
+<td>BOOLEAN</td>
+<td>Assistência social</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ref_education</code></td>
+<td>BOOLEAN</td>
+<td>Educação</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ref_womens_service</code></td>
+<td>BOOLEAN</td>
+<td>Atendimento à mulher</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ref_child_protection</code></td>
+<td>BOOLEAN</td>
+<td>Conselho Tutelar</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ref_elderly_council</code></td>
+<td>BOOLEAN</td>
+<td>Conselho do Idoso</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ref_elderly_police</code></td>
+<td>BOOLEAN</td>
+<td>Delegacia do Idoso</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ref_human_rights</code></td>
+<td>BOOLEAN</td>
+<td>Direitos Humanos</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ref_prosecutors_office</code></td>
+<td>BOOLEAN</td>
+<td>Ministério Público</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ref_child_police</code></td>
+<td>BOOLEAN</td>
+<td>DPCA</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ref_womens_police</code></td>
+<td>BOOLEAN</td>
+<td>DEAM</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ref_other_police</code></td>
+<td>BOOLEAN</td>
+<td>Outras delegacias</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ref_juvenile_court</code></td>
+<td>BOOLEAN</td>
+<td>Justiça da Infância</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ref_public_defender</code></td>
+<td>BOOLEAN</td>
+<td>Defensoria Pública</td>
 <td></td>
 </tr>
 </tbody>
