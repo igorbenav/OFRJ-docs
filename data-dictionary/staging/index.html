@@ -1060,6 +1060,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data-sources/creas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CREAS — Assistência Social
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/justica-tj/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Justiça TJ-RJ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../data-sources/legislacao/" class="md-nav__link">
         
   
@@ -1565,6 +1621,28 @@
     <span class="md-ellipsis">
       
         stg_disque180__perfil
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stg_creas__violencia_intrafamiliar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        stg_creas__violencia_intrafamiliar
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stg_justica_tj__indicadores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        stg_justica_tj__indicadores
       
     </span>
   </a>
@@ -2084,6 +2162,28 @@
     <span class="md-ellipsis">
       
         stg_disque180__perfil
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stg_creas__violencia_intrafamiliar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        stg_creas__violencia_intrafamiliar
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stg_justica_tj__indicadores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        stg_justica_tj__indicadores
       
     </span>
   </a>
@@ -3588,6 +3688,106 @@
 <td><code>loaded_at</code></td>
 <td>TIMESTAMP</td>
 <td>Timestamp de carga</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="stg_creas__violencia_intrafamiliar">stg_creas__violencia_intrafamiliar<a class="headerlink" href="#stg_creas__violencia_intrafamiliar" title="Permanent link">&para;</a></h2>
+<p>CREAS (Assistência Social) — contagem anual de mulheres adultas vítimas de violência intrafamiliar por município. Período: 2024-2025.</p>
+<table>
+<thead>
+<tr>
+<th>Coluna</th>
+<th>Tipo</th>
+<th>Descrição</th>
+<th>Testes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>creas_row_id</code></td>
+<td>INT</td>
+<td>ID sintético único</td>
+<td><code>unique</code>, <code>not_null</code></td>
+</tr>
+<tr>
+<td><code>ibge_code_6</code></td>
+<td>TEXT</td>
+<td>Código IBGE 6 dígitos (resolvido via dim_location)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>municipio</code></td>
+<td>TEXT</td>
+<td>Município</td>
+<td></td>
+</tr>
+<tr>
+<td><code>regiao</code></td>
+<td>TEXT</td>
+<td>Região do RJ</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ano</code></td>
+<td>INT</td>
+<td>Ano (2024 ou 2025)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>total_mulheres_violencia_intrafamiliar</code></td>
+<td>INT</td>
+<td>Mulheres adultas atendidas</td>
+<td></td>
+</tr>
+<tr>
+<td><code>loaded_at</code></td>
+<td>TIMESTAMP</td>
+<td>Timestamp de carga</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="stg_justica_tj__indicadores">stg_justica_tj__indicadores<a class="headerlink" href="#stg_justica_tj__indicadores" title="Permanent link">&para;</a></h2>
+<p>Indicadores anuais do TJ-RJ unificados em formato EAV. 5 contextos: violencia_domestica, feminicidio, medidas_protetivas, cejuvida, projeto_violeta. Dado estadual sem desagregação por município.</p>
+<table>
+<thead>
+<tr>
+<th>Coluna</th>
+<th>Tipo</th>
+<th>Descrição</th>
+<th>Testes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>justica_tj_row_id</code></td>
+<td>INT</td>
+<td>ID sintético único</td>
+<td><code>unique</code>, <code>not_null</code></td>
+</tr>
+<tr>
+<td><code>ano</code></td>
+<td>INT</td>
+<td>Ano (2015-2026)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>contexto</code></td>
+<td>TEXT</td>
+<td>violencia_domestica, feminicidio, medidas_protetivas, cejuvida, projeto_violeta</td>
+<td></td>
+</tr>
+<tr>
+<td><code>indicador</code></td>
+<td>TEXT</td>
+<td>Indicador dentro do contexto</td>
+<td></td>
+</tr>
+<tr>
+<td><code>valor</code></td>
+<td>NUMERIC</td>
+<td>Valor numérico (null se ausente ou não-numérico)</td>
 <td></td>
 </tr>
 </tbody>

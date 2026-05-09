@@ -1060,6 +1060,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data-sources/creas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CREAS — Assistência Social
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-sources/justica-tj/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Justiça TJ-RJ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../data-sources/legislacao/" class="md-nav__link">
         
   
@@ -1647,6 +1703,28 @@
     <span class="md-ellipsis">
       
         raw.indicador_justica
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rawcreas_violencia_intrafamiliar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        raw.creas_violencia_intrafamiliar
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rawjustica_tj_-5-tabelas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        raw.justica_tj_* (5 tabelas)
       
     </span>
   </a>
@@ -2271,6 +2349,28 @@
     <span class="md-ellipsis">
       
         raw.indicador_justica
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rawcreas_violencia_intrafamiliar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        raw.creas_violencia_intrafamiliar
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rawjustica_tj_-5-tabelas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        raw.justica_tj_* (5 tabelas)
       
     </span>
   </a>
@@ -3274,7 +3374,7 @@
 </tbody>
 </table>
 <h2 id="rawrede_protecao">raw.rede_protecao<a class="headerlink" href="#rawrede_protecao" title="Permanent link">&para;</a></h2>
-<p>Equipamentos da rede de proteção.</p>
+<p>Equipamentos da rede de proteção (formato 2026 — 7 colunas).</p>
 <table>
 <thead>
 <tr>
@@ -3285,34 +3385,19 @@
 </thead>
 <tbody>
 <tr>
-<td><code>nome_instituicao</code></td>
-<td>TEXT</td>
-<td>Nome da instituição</td>
-</tr>
-<tr>
-<td><code>tipo_instituicao</code></td>
-<td>TEXT</td>
-<td>Tipo (DEAM, CEAM, Conselho Tutelar, etc.)</td>
-</tr>
-<tr>
-<td><code>categoria</code></td>
-<td>TEXT</td>
-<td>Categoria funcional</td>
-</tr>
-<tr>
-<td><code>publico_privado</code></td>
-<td>TEXT</td>
-<td>Público ou privado</td>
-</tr>
-<tr>
 <td><code>municipio</code></td>
 <td>TEXT</td>
 <td>Município</td>
 </tr>
 <tr>
-<td><code>regiao</code></td>
+<td><code>nome_instituicao</code></td>
 <td>TEXT</td>
-<td>Região do estado</td>
+<td>Nome do local/instituição</td>
+</tr>
+<tr>
+<td><code>tipo_equipamento</code></td>
+<td>TEXT</td>
+<td>Tipo (DEAM, CEAM, Conselho Tutelar, etc.)</td>
 </tr>
 <tr>
 <td><code>endereco</code></td>
@@ -3330,24 +3415,9 @@
 <td>E-mail</td>
 </tr>
 <tr>
-<td><code>geolocalizacao</code></td>
-<td>TEXT</td>
-<td>URL de geolocalização</td>
-</tr>
-<tr>
-<td><code>horario_funcionamento</code></td>
-<td>TEXT</td>
-<td>Horário de atendimento</td>
-</tr>
-<tr>
-<td><code>encaminha_abrigamento</code></td>
-<td>TEXT</td>
-<td>Se encaminha para abrigo</td>
-</tr>
-<tr>
 <td><code>observacoes</code></td>
 <td>TEXT</td>
-<td>Observações</td>
+<td>Observações sobre o atendimento oferecido</td>
 </tr>
 <tr>
 <td><code>_loaded_at</code></td>
@@ -3485,6 +3555,54 @@
 </tr>
 </tbody>
 </table>
+<h2 id="rawcreas_violencia_intrafamiliar">raw.creas_violencia_intrafamiliar<a class="headerlink" href="#rawcreas_violencia_intrafamiliar" title="Permanent link">&para;</a></h2>
+<p>CREAS — atendimentos anuais a mulheres adultas vítimas de violência intrafamiliar por município.</p>
+<table>
+<thead>
+<tr>
+<th>Coluna</th>
+<th>Tipo</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>municipio</code></td>
+<td>TEXT</td>
+<td>Município</td>
+</tr>
+<tr>
+<td><code>regiao</code></td>
+<td>TEXT</td>
+<td>Região do estado</td>
+</tr>
+<tr>
+<td><code>ano</code></td>
+<td>TEXT</td>
+<td>Ano (2024 ou 2025)</td>
+</tr>
+<tr>
+<td><code>total_mulheres_violencia_intrafamiliar</code></td>
+<td>TEXT</td>
+<td>Total de mulheres adultas atendidas</td>
+</tr>
+<tr>
+<td><code>_loaded_at</code></td>
+<td>TIMESTAMP</td>
+<td>Timestamp de carga</td>
+</tr>
+</tbody>
+</table>
+<h2 id="rawjustica_tj_-5-tabelas">raw.justica_tj_* (5 tabelas)<a class="headerlink" href="#rawjustica_tj_-5-tabelas" title="Permanent link">&para;</a></h2>
+<p>Indicadores anuais do TJ-RJ — uma tabela por contexto, schemas próprios.</p>
+<ul>
+<li><strong><code>raw.justica_tj_violencia_domestica</code></strong>: <code>ano</code>, <code>acervo</code>, <code>distribuidos</code></li>
+<li><strong><code>raw.justica_tj_feminicidio</code></strong>: <code>ano</code>, <code>acervo</code>, <code>distribuidos</code>, <code>plenários_do_juri</code>, <code>tempo_medio_do_plenário</code>, <code>audiências_realizadas</code>, <code>audiências_futuras_agendadas</code>, <code>sentenças</code>, <code>prisões</code></li>
+<li><strong><code>raw.justica_tj_medidas_protetivas</code></strong>: <code>ano</code>, <code>medidas_protetivas</code>, <code>deferidas</code>, <code>concedidas_em_parte</code>, <code>indeferidas</code></li>
+<li><strong><code>raw.justica_tj_cejuvida</code></strong>: <code>ano</code>, <code>abrigamentos</code></li>
+<li><strong><code>raw.justica_tj_projeto_violeta</code></strong>: <code>ano</code>, <code>projeto_violeta</code></li>
+</ul>
+<p>Período: 2015-2026. Dado estadual, sem município.</p>
 
 
 
